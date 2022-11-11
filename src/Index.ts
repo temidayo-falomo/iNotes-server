@@ -17,7 +17,7 @@ mongoose
     "mongodb+srv://temidayo:7zZKyWQYr2aOqOv1@inotes-cluster.rhbhyen.mongodb.net/?retryWrites=true&w=majority"
   )
   .then(() => {
-    app.listen(process.env.PORT || 3000);
+    app.listen(process.env.PORT);
   })
   .then(() => {
     console.log("Connected to Database");
