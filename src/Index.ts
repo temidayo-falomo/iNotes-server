@@ -6,7 +6,7 @@ import cors from "cors";
 const app: Application = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://inotes-mini.netlify.app"],
   })
 );
 app.use(express.json());
