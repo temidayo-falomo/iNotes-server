@@ -4,7 +4,7 @@
   "description": "",
   "main": "Index.js",
   "scripts": {
-    "start": "npm run build && node build/Index.js",
+    "start": "npm run build && node dist/Index.js",
     "dev": "nodemon ./src/Index.ts",
     "build": "rimraf ./dist && tsc",
     "prestart": "npm run build"

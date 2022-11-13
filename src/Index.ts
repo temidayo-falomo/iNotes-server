@@ -1,6 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
-import userRouter from "../routes/user-routes";
+import userRouter from "./routes/user-routes";
 import cors from "cors";
 
 const app: Application = express();
