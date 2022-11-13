@@ -1,0 +1,9 @@
+export declare const getAllUsers: (req: any, res: any, next: any) => Promise<any>;
+export declare const addUser: (req: any, res: any, next: any) => Promise<any>;
+export declare const getUser: (req: any, res: any, next: any) => Promise<any>;
+export declare const addNote: (req: any, res: any) => Promise<any>;
+export declare const addFolder: (req: any, res: any) => Promise<any>;
+export declare const deleteNoteToRecents: (req: any, res: any) => Promise<any>;
+export declare const removeNote: (req: any, res: any) => Promise<any>;
+export declare const updateNote: (req: any, res: any) => Promise<any>;
+export declare const deleteFolder: (req: any, res: any) => Promise<any>;
