@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "node dist/Index.js",
     "dev": "nodemon ./src/Index.ts",
-    "build": "tsc -p ."
+    "build": "npm run build",
+    "prestart": "npm run build"
   },
   "author": "",
   "license": "ISC",
