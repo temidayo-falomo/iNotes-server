@@ -18,7 +18,7 @@ Install my-project with npm
 
 Link to Live Site
 
-https://iNotes-mini.netlify.app
+https://inotes-mini.netlify.app
 ## Running Tests
 
 To run tests, run the following command

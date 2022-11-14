@@ -5,7 +5,7 @@ import {
   addUser,
   deleteFolder,
   deleteNoteToRecents,
-  getAllUsers,
+  // getAllUsers,
   getUser,
   removeNote,
   updateNote,
@@ -13,7 +13,7 @@ import {
 
 const userRouter = express.Router();
 
-userRouter.get("/all-users", getAllUsers);
+// userRouter.get("/all-users", getAllUsers);
 userRouter.post("/add-user", addUser);
 userRouter.get("/get-user/:id", getUser);
 userRouter.post("/add-note", addNote);
