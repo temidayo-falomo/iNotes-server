@@ -7,6 +7,7 @@ import {
   deleteNoteToRecents,
   // getAllUsers,
   getUser,
+  recoverNote,
   removeNote,
   updateNote,
 } from "../controllers/user-controller";
@@ -22,5 +23,6 @@ userRouter.put("/delete-note", deleteNoteToRecents);
 userRouter.put("/remove-note", removeNote);
 userRouter.put("/edit-note", updateNote);
 userRouter.put("/delete-folder", deleteFolder);
+userRouter.put("/recover-note", recoverNote);
 
 export default userRouter;

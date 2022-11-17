@@ -217,3 +217,32 @@ export const deleteFolder = async (req: any, res: any) => {
 
   return res.status(200).json({ message: "Suuccesfully Removed Folder!" });
 };
+
+export const recoverNote = async (req: any, res: any) => {
+  let note;
+  let currentUser = req.body.userId;
+
+  const noteToBeAdded = {
+    folder: req.body.folderName,
+    noteText: req.body.noteText,
+    noteTitle: req.body.noteTitle,
+    date: req.body.date,
+    pinned: req.body.pinnedState,
+    timestamp: req.body.timestamp,
+    _id: req.body.currentNoteId,
+  };
+
+  try {
+    note = await User.findByIdAndUpdate(currentUser, {
+      $push: { notes: noteToBeAdded },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!note) {
+    return res.status(404).json({ message: "Unable to recover note" });
+  }
+
+  return res.status(200).json({ message: "Suuccesfully Recovered Note!" });
+};
