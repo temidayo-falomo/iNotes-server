@@ -123,6 +123,7 @@ export const addFolder = async (req: any, res: any) => {
   return res.status(200).json({ message: "Added Folder!" });
 };
 
+//TAKE NOTE TO REC DELETED
 export const deleteNoteToRecents = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;
@@ -151,7 +152,7 @@ export const deleteNoteToRecents = async (req: any, res: any) => {
 
   return res.status(200).json({ message: "Suuccesfully Deleted Note!" });
 };
-
+//TO REMOVE NOTE IMMEDIATELY AFTER BEING DELETED
 export const removeNote = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;
@@ -171,6 +172,7 @@ export const removeNote = async (req: any, res: any) => {
   return res.status(200).json({ message: "Suuccesfully Removed Note!" });
 };
 
+//UPDATE NOTE WITH NEW TEXT & TITLE
 export const updateNote = async (req: any, res: any) => {
   let note;
   let result;
@@ -218,6 +220,8 @@ export const deleteFolder = async (req: any, res: any) => {
   return res.status(200).json({ message: "Suuccesfully Removed Folder!" });
 };
 
+//TO RECOVER NOTE
+
 export const recoverNote = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;
@@ -245,4 +249,27 @@ export const recoverNote = async (req: any, res: any) => {
   }
 
   return res.status(200).json({ message: "Suuccesfully Recovered Note!" });
+};
+
+export const completelyDeleteNote = async (req: any, res: any) => {
+  let note;
+  let currentUser = req.body.userId;
+
+  try {
+    note = await User.findByIdAndUpdate(currentUser, {
+      $pull: { deleted: { _id: req.body.currentNoteId } },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!note) {
+    return res
+      .status(404)
+      .json({ message: "Unable to Completely Remove note" });
+  }
+
+  return res
+    .status(200)
+    .json({ message: "Suuccesfully Removed Note Completely!" });
 };

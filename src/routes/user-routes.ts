@@ -3,6 +3,7 @@ import {
   addFolder,
   addNote,
   addUser,
+  completelyDeleteNote,
   deleteFolder,
   deleteNoteToRecents,
   // getAllUsers,
@@ -24,5 +25,6 @@ userRouter.put("/remove-note", removeNote);
 userRouter.put("/edit-note", updateNote);
 userRouter.put("/delete-folder", deleteFolder);
 userRouter.put("/recover-note", recoverNote);
+userRouter.put("/completely-delete", completelyDeleteNote);
 
 export default userRouter;
