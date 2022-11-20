@@ -273,3 +273,28 @@ export const completelyDeleteNote = async (req: any, res: any) => {
     .status(200)
     .json({ message: "Suuccesfully Removed Note Completely!" });
 };
+
+export const pinOrUnpinNote = async (req: any, res: any) => {
+  let note;
+  let currentUser = req.body.userId;
+  let index = req.body.index;
+
+  try {
+    note = await User.updateOne(
+      { _id: currentUser },
+      {
+        $set: {
+          [`notes.${index}.pinned`]: req.body.pinnedState,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!note) {
+    return res.status(404).json({ message: "Unable to Pin note" });
+  }
+
+  return res.status(200).json({ message: "Succesfully Pinned Note!" });
+};

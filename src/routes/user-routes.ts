@@ -6,8 +6,8 @@ import {
   completelyDeleteNote,
   deleteFolder,
   deleteNoteToRecents,
-  // getAllUsers,
   getUser,
+  pinOrUnpinNote,
   recoverNote,
   removeNote,
   updateNote,
@@ -15,7 +15,6 @@ import {
 
 const userRouter = express.Router();
 
-// userRouter.get("/all-users", getAllUsers);
 userRouter.post("/add-user", addUser);
 userRouter.get("/get-user/:id", getUser);
 userRouter.post("/add-note", addNote);
@@ -26,5 +25,6 @@ userRouter.put("/edit-note", updateNote);
 userRouter.put("/delete-folder", deleteFolder);
 userRouter.put("/recover-note", recoverNote);
 userRouter.put("/completely-delete", completelyDeleteNote);
+userRouter.put("/pin-note", pinOrUnpinNote);
 
 export default userRouter;
