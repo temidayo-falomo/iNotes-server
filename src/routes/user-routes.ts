@@ -7,9 +7,10 @@ import {
   deleteFolder,
   deleteNoteToRecents,
   getUser,
-  pinOrUnpinNote,
+  pinNote,
   recoverNote,
   removeNote,
+  unPinNote,
   updateNote,
 } from "../controllers/user-controller";
 
@@ -25,6 +26,7 @@ userRouter.put("/edit-note", updateNote);
 userRouter.put("/delete-folder", deleteFolder);
 userRouter.put("/recover-note", recoverNote);
 userRouter.put("/completely-delete", completelyDeleteNote);
-userRouter.put("/pin-note", pinOrUnpinNote);
+userRouter.put("/pin-note", pinNote);
+userRouter.put("/unpin-note", unPinNote);
 
 export default userRouter;
