@@ -1,6 +1,7 @@
 import User from "../models/User";
 import bcrypt from "bcryptjs";
 
+//GET ALL CURRENT USERS USING
 export const getAllUsers = async (req: any, res: any, next: any) => {
   let users;
   try {
@@ -16,6 +17,7 @@ export const getAllUsers = async (req: any, res: any, next: any) => {
   return res.status(200).json({ users });
 };
 
+//ADD USER
 export const addUser = async (req: any, res: any, next: any) => {
   let existingUser;
 
@@ -46,6 +48,7 @@ export const addUser = async (req: any, res: any, next: any) => {
   return res.status(200).json({ message: "Successfuully Created Profile" });
 };
 
+//GET INFO OF LOGGED IN USER
 export const getUser = async (req: any, res: any, next: any) => {
   const userId = req.params.id;
 
@@ -64,6 +67,7 @@ export const getUser = async (req: any, res: any, next: any) => {
   return res.status(200).json({ user });
 };
 
+//ADD NEW NOTE
 export const addNote = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;
@@ -97,6 +101,7 @@ export const addNote = async (req: any, res: any) => {
   return res.status(200).json({ message: "Added Note!" });
 };
 
+//ADD NEW FOLDER
 export const addFolder = async (req: any, res: any) => {
   let folder;
   let folderExists;
@@ -152,6 +157,7 @@ export const deleteNoteToRecents = async (req: any, res: any) => {
 
   return res.status(200).json({ message: "Suuccesfully Deleted Note!" });
 };
+
 //TO REMOVE NOTE IMMEDIATELY AFTER BEING DELETED
 export const removeNote = async (req: any, res: any) => {
   let note;
@@ -201,6 +207,7 @@ export const updateNote = async (req: any, res: any) => {
   return res.status(200).json({ message: "Suuccesfully Updated Note!" });
 };
 
+//DELETE FOLDER TO RECENTLY DELETED
 export const deleteFolder = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;
@@ -221,7 +228,6 @@ export const deleteFolder = async (req: any, res: any) => {
 };
 
 //TO RECOVER NOTE
-
 export const recoverNote = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;
@@ -251,6 +257,7 @@ export const recoverNote = async (req: any, res: any) => {
   return res.status(200).json({ message: "Suuccesfully Recovered Note!" });
 };
 
+//DELETE NOTE FROM RECENTLY DELETED
 export const completelyDeleteNote = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;
@@ -274,6 +281,7 @@ export const completelyDeleteNote = async (req: any, res: any) => {
     .json({ message: "Suuccesfully Removed Note Completely!" });
 };
 
+//PIN NOTE
 export const pinNote = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;
@@ -299,6 +307,7 @@ export const pinNote = async (req: any, res: any) => {
   return res.status(200).json({ message: "Succesfully Pinned Note!" });
 };
 
+//UNPIN NOTE
 export const unPinNote = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;

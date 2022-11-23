@@ -16,6 +16,8 @@ import {
 
 const userRouter = express.Router();
 
+
+//ROUTES
 userRouter.post("/add-user", addUser);
 userRouter.get("/get-user/:id", getUser);
 userRouter.post("/add-note", addNote);
