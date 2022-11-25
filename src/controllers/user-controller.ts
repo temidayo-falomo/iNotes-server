@@ -37,6 +37,7 @@ export const addUser = async (req: any, res: any, next: any) => {
     _id: req.body.userId,
     notes: req.body.notes,
     folderNames: req.body.folderNames,
+    password: req.body.password,
   });
 
   try {
