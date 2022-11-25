@@ -7,6 +7,7 @@ import {
   deleteFolder,
   deleteNoteToRecents,
   getUser,
+  lockNote,
   pinNote,
   recoverNote,
   removeNote,
@@ -15,7 +16,6 @@ import {
 } from "../controllers/user-controller";
 
 const userRouter = express.Router();
-
 
 //ROUTES
 userRouter.post("/add-user", addUser);
@@ -30,5 +30,6 @@ userRouter.put("/recover-note", recoverNote);
 userRouter.put("/completely-delete", completelyDeleteNote);
 userRouter.put("/pin-note", pinNote);
 userRouter.put("/unpin-note", unPinNote);
+userRouter.put("/lock-note", lockNote);
 
 export default userRouter;

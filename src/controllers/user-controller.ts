@@ -81,6 +81,7 @@ export const addNote = async (req: any, res: any) => {
     date: req.body.date,
     pinned: req.body.pinnedState,
     timestamp: req.body.timestamp,
+    locked: req.body.lockedState,
   };
 
   //!TODO: Add Initial Filter To Frontend for only where pinned is true (With Unique Sets)
@@ -141,6 +142,7 @@ export const deleteNoteToRecents = async (req: any, res: any) => {
     pinned: req.body.pinnedState,
     timestamp: req.body.timestamp,
     _id: req.body.currentNoteId,
+    locked: req.body.lockedState,
   };
 
   try {
@@ -240,6 +242,7 @@ export const recoverNote = async (req: any, res: any) => {
     pinned: req.body.pinnedState,
     timestamp: req.body.timestamp,
     _id: req.body.currentNoteId,
+    locked: req.body.lockedState,
   };
 
   try {
@@ -331,4 +334,30 @@ export const unPinNote = async (req: any, res: any) => {
   }
 
   return res.status(200).json({ message: "Succesfully unPinned Note!" });
+};
+
+//LOCK NOTE
+export const lockNote = async (req: any, res: any) => {
+  let note;
+  let currentUser = req.body.userId;
+  let index = req.body.index;
+
+  try {
+    note = await User.updateOne(
+      { _id: currentUser },
+      {
+        $set: {
+          [`notes.${index}.locked`]: true,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!note) {
+    return res.status(404).json({ message: "Unable to Lock note" });
+  }
+
+  return res.status(200).json({ message: "Succesfully Locked Note!" });
 };

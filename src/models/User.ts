@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-//SCHEMA
+//SCHEMA FOR USER
 
 const Schema = mongoose.Schema;
 
@@ -17,6 +17,9 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+  },
   notes: [
     {
       folder: String,
@@ -25,6 +28,7 @@ const UserSchema = new Schema({
       date: String,
       pinned: Boolean,
       timestamp: String,
+      locked: Boolean,
     },
   ],
   deleted: [
@@ -35,6 +39,7 @@ const UserSchema = new Schema({
       date: String,
       pinned: Boolean,
       timestamp: String,
+      locked: Boolean,
     },
   ],
   folderNames: [
