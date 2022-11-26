@@ -21,4 +21,5 @@ userRouter.put("/pin-note", user_controller_1.pinNote);
 userRouter.put("/unpin-note", user_controller_1.unPinNote);
 userRouter.put("/lock-note", user_controller_1.lockNote);
 userRouter.put("/unlock-note", user_controller_1.unLock);
+userRouter.put("/change-pin", user_controller_1.changePin);
 exports.default = userRouter;

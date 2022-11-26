@@ -3,6 +3,7 @@ import {
   addFolder,
   addNote,
   addUser,
+  changePin,
   completelyDeleteNote,
   deleteFolder,
   deleteNoteToRecents,
@@ -33,5 +34,6 @@ userRouter.put("/pin-note", pinNote);
 userRouter.put("/unpin-note", unPinNote);
 userRouter.put("/lock-note", lockNote);
 userRouter.put("/unlock-note", unLock);
+userRouter.put("/change-pin", changePin);
 
 export default userRouter;

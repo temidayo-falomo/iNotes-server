@@ -362,6 +362,7 @@ export const lockNote = async (req: any, res: any) => {
   return res.status(200).json({ message: "Succesfully Locked Note!" });
 };
 
+//UNLOCK NOTE
 export const unLock = async (req: any, res: any) => {
   let note;
   let currentUser = req.body.userId;
@@ -385,4 +386,24 @@ export const unLock = async (req: any, res: any) => {
   }
 
   return res.status(200).json({ message: "Succesfully Locked Note!" });
+};
+
+//CHANGE PASSWORD
+export const changePin = async (req: any, res: any) => {
+  let user;
+  let currentUser = req.body.userId;
+
+  try {
+    user = await User.findByIdAndUpdate(currentUser, {
+      password: req.body.newPassword,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!user) {
+    return res.status(404).json({ message: "Unable to Change Pin" });
+  }
+
+  return res.status(200).json({ message: "Succesfully Changed Pin!" });
 };

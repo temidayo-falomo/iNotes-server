@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.unLock = exports.lockNote = exports.unPinNote = exports.pinNote = exports.completelyDeleteNote = exports.recoverNote = exports.deleteFolder = exports.updateNote = exports.removeNote = exports.deleteNoteToRecents = exports.addFolder = exports.addNote = exports.getUser = exports.addUser = exports.getAllUsers = void 0;
+exports.changePin = exports.unLock = exports.lockNote = exports.unPinNote = exports.pinNote = exports.completelyDeleteNote = exports.recoverNote = exports.deleteFolder = exports.updateNote = exports.removeNote = exports.deleteNoteToRecents = exports.addFolder = exports.addNote = exports.getUser = exports.addUser = exports.getAllUsers = void 0;
 var User_1 = __importDefault(require("../models/User"));
 var bcryptjs_1 = __importDefault(require("bcryptjs"));
 //GET ALL CURRENT USERS USING
@@ -502,6 +502,7 @@ var lockNote = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.lockNote = lockNote;
+//UNLOCK NOTE
 var unLock = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var note, currentUser, index, error_15;
     var _a;
@@ -534,3 +535,32 @@ var unLock = function (req, res) { return __awaiter(void 0, void 0, void 0, func
     });
 }); };
 exports.unLock = unLock;
+//CHANGE PASSWORD
+var changePin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, currentUser, error_16;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                currentUser = req.body.userId;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, User_1.default.findByIdAndUpdate(currentUser, {
+                        password: req.body.newPassword,
+                    })];
+            case 2:
+                user = _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                error_16 = _a.sent();
+                console.log(error_16);
+                return [3 /*break*/, 4];
+            case 4:
+                if (!user) {
+                    return [2 /*return*/, res.status(404).json({ message: "Unable to Change Pin" })];
+                }
+                return [2 /*return*/, res.status(200).json({ message: "Succesfully Changed Pin!" })];
+        }
+    });
+}); };
+exports.changePin = changePin;
