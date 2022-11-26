@@ -39,9 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteFolder = exports.updateNote = exports.removeNote = exports.deleteNoteToRecents = exports.addFolder = exports.addNote = exports.getUser = exports.addUser = exports.getAllUsers = void 0;
+exports.unLock = exports.lockNote = exports.unPinNote = exports.pinNote = exports.completelyDeleteNote = exports.recoverNote = exports.deleteFolder = exports.updateNote = exports.removeNote = exports.deleteNoteToRecents = exports.addFolder = exports.addNote = exports.getUser = exports.addUser = exports.getAllUsers = void 0;
 var User_1 = __importDefault(require("../models/User"));
 var bcryptjs_1 = __importDefault(require("bcryptjs"));
+//GET ALL CURRENT USERS USING
 var getAllUsers = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var users, error_1;
     return __generator(this, function (_a) {
@@ -64,6 +65,7 @@ var getAllUsers = function (req, res, next) { return __awaiter(void 0, void 0, v
     });
 }); };
 exports.getAllUsers = getAllUsers;
+//ADD USER
 var addUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var existingUser, error_2, user;
     return __generator(this, function (_a) {
@@ -87,6 +89,7 @@ var addUser = function (req, res, next) { return __awaiter(void 0, void 0, void 
                     _id: req.body.userId,
                     notes: req.body.notes,
                     folderNames: req.body.folderNames,
+                    password: req.body.password,
                 });
                 try {
                     user.save();
@@ -99,6 +102,7 @@ var addUser = function (req, res, next) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.addUser = addUser;
+//GET INFO OF LOGGED IN USER
 var getUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var userId, user, error_3;
     return __generator(this, function (_a) {
@@ -124,6 +128,7 @@ var getUser = function (req, res, next) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.getUser = getUser;
+//ADD NEW NOTE
 var addNote = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var note, currentUser, hashedNoteText, noteToBeAdded, error_4;
     return __generator(this, function (_a) {
@@ -138,6 +143,7 @@ var addNote = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                     date: req.body.date,
                     pinned: req.body.pinnedState,
                     timestamp: req.body.timestamp,
+                    locked: req.body.lockedState,
                 };
                 _a.label = 1;
             case 1:
@@ -161,8 +167,9 @@ var addNote = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 exports.addNote = addNote;
+//ADD NEW FOLDER
 var addFolder = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var folder, folderExists, currentUser, folderTobeAdded, error_5;
+    var folder, currentUser, folderTobeAdded, error_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -192,6 +199,7 @@ var addFolder = function (req, res) { return __awaiter(void 0, void 0, void 0, f
     });
 }); };
 exports.addFolder = addFolder;
+//TAKE NOTE TO REC DELETED
 var deleteNoteToRecents = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var note, currentUser, noteToBeAdded, error_6;
     return __generator(this, function (_a) {
@@ -206,6 +214,7 @@ var deleteNoteToRecents = function (req, res) { return __awaiter(void 0, void 0,
                     pinned: req.body.pinnedState,
                     timestamp: req.body.timestamp,
                     _id: req.body.currentNoteId,
+                    locked: req.body.lockedState,
                 };
                 _a.label = 1;
             case 1:
@@ -229,6 +238,7 @@ var deleteNoteToRecents = function (req, res) { return __awaiter(void 0, void 0,
     });
 }); };
 exports.deleteNoteToRecents = deleteNoteToRecents;
+//TO REMOVE NOTE IMMEDIATELY AFTER BEING DELETED
 var removeNote = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var note, currentUser, error_7;
     return __generator(this, function (_a) {
@@ -257,6 +267,7 @@ var removeNote = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.removeNote = removeNote;
+//UPDATE NOTE WITH NEW TEXT & TITLE
 var updateNote = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var note, result, currentUser, index, error_8;
     var _a;
@@ -291,6 +302,7 @@ var updateNote = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.updateNote = updateNote;
+//DELETE FOLDER TO RECENTLY DELETED
 var deleteFolder = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var note, currentUser, error_9;
     return __generator(this, function (_a) {
@@ -319,3 +331,206 @@ var deleteFolder = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.deleteFolder = deleteFolder;
+//TO RECOVER NOTE
+var recoverNote = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var note, currentUser, noteToBeAdded, error_10;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                currentUser = req.body.userId;
+                noteToBeAdded = {
+                    folder: req.body.folderName,
+                    noteText: req.body.noteText,
+                    noteTitle: req.body.noteTitle,
+                    date: req.body.date,
+                    pinned: req.body.pinnedState,
+                    timestamp: req.body.timestamp,
+                    _id: req.body.currentNoteId,
+                    locked: req.body.lockedState,
+                };
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, User_1.default.findByIdAndUpdate(currentUser, {
+                        $push: { notes: noteToBeAdded },
+                    })];
+            case 2:
+                note = _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                error_10 = _a.sent();
+                console.log(error_10);
+                return [3 /*break*/, 4];
+            case 4:
+                if (!note) {
+                    return [2 /*return*/, res.status(404).json({ message: "Unable to recover note" })];
+                }
+                return [2 /*return*/, res.status(200).json({ message: "Suuccesfully Recovered Note!" })];
+        }
+    });
+}); };
+exports.recoverNote = recoverNote;
+//DELETE NOTE FROM RECENTLY DELETED
+var completelyDeleteNote = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var note, currentUser, error_11;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                currentUser = req.body.userId;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, User_1.default.findByIdAndUpdate(currentUser, {
+                        $pull: { deleted: { _id: req.body.currentNoteId } },
+                    })];
+            case 2:
+                note = _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                error_11 = _a.sent();
+                console.log(error_11);
+                return [3 /*break*/, 4];
+            case 4:
+                if (!note) {
+                    return [2 /*return*/, res
+                            .status(404)
+                            .json({ message: "Unable to Completely Remove note" })];
+                }
+                return [2 /*return*/, res
+                        .status(200)
+                        .json({ message: "Suuccesfully Removed Note Completely!" })];
+        }
+    });
+}); };
+exports.completelyDeleteNote = completelyDeleteNote;
+//PIN NOTE
+var pinNote = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var note, currentUser, index, error_12;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                currentUser = req.body.userId;
+                index = req.body.index;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, User_1.default.updateOne({ _id: currentUser }, {
+                        $set: (_a = {},
+                            _a["notes.".concat(index, ".pinned")] = true,
+                            _a),
+                    })];
+            case 2:
+                note = _b.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                error_12 = _b.sent();
+                console.log(error_12);
+                return [3 /*break*/, 4];
+            case 4:
+                if (!note) {
+                    return [2 /*return*/, res.status(404).json({ message: "Unable to Pin note" })];
+                }
+                return [2 /*return*/, res.status(200).json({ message: "Succesfully Pinned Note!" })];
+        }
+    });
+}); };
+exports.pinNote = pinNote;
+//UNPIN NOTE
+var unPinNote = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var note, currentUser, index, error_13;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                currentUser = req.body.userId;
+                index = req.body.index;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, User_1.default.updateOne({ _id: currentUser }, {
+                        $set: (_a = {},
+                            _a["notes.".concat(index, ".pinned")] = false,
+                            _a),
+                    })];
+            case 2:
+                note = _b.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                error_13 = _b.sent();
+                console.log(error_13);
+                return [3 /*break*/, 4];
+            case 4:
+                if (!note) {
+                    return [2 /*return*/, res.status(404).json({ message: "Unable to Unpin note" })];
+                }
+                return [2 /*return*/, res.status(200).json({ message: "Succesfully unPinned Note!" })];
+        }
+    });
+}); };
+exports.unPinNote = unPinNote;
+//LOCK NOTE
+var lockNote = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var note, currentUser, index, error_14;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                currentUser = req.body.userId;
+                index = req.body.index;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, User_1.default.updateOne({ _id: currentUser }, {
+                        $set: (_a = {},
+                            _a["notes.".concat(index, ".locked")] = true,
+                            _a),
+                    })];
+            case 2:
+                note = _b.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                error_14 = _b.sent();
+                console.log(error_14);
+                return [3 /*break*/, 4];
+            case 4:
+                if (!note) {
+                    return [2 /*return*/, res.status(404).json({ message: "Unable to Lock note" })];
+                }
+                return [2 /*return*/, res.status(200).json({ message: "Succesfully Locked Note!" })];
+        }
+    });
+}); };
+exports.lockNote = lockNote;
+var unLock = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var note, currentUser, index, error_15;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                currentUser = req.body.userId;
+                index = req.body.index;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, User_1.default.updateOne({ _id: currentUser }, {
+                        $set: (_a = {},
+                            _a["notes.".concat(index, ".locked")] = false,
+                            _a),
+                    })];
+            case 2:
+                note = _b.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                error_15 = _b.sent();
+                console.log(error_15);
+                return [3 /*break*/, 4];
+            case 4:
+                if (!note) {
+                    return [2 /*return*/, res.status(404).json({ message: "Unable to unLock note" })];
+                }
+                return [2 /*return*/, res.status(200).json({ message: "Succesfully Locked Note!" })];
+        }
+    });
+}); };
+exports.unLock = unLock;

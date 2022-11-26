@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importDefault(require("mongoose"));
+//SCHEMA FOR USER
 var Schema = mongoose_1.default.Schema;
 var UserSchema = new Schema({
     fullName: {
@@ -18,6 +19,10 @@ var UserSchema = new Schema({
         type: String,
         required: true,
     },
+    password: {
+        type: String,
+        required: true,
+    },
     notes: [
         {
             folder: String,
@@ -26,6 +31,7 @@ var UserSchema = new Schema({
             date: String,
             pinned: Boolean,
             timestamp: String,
+            locked: Boolean,
         },
     ],
     deleted: [
@@ -36,6 +42,7 @@ var UserSchema = new Schema({
             date: String,
             pinned: Boolean,
             timestamp: String,
+            locked: Boolean,
         },
     ],
     folderNames: [
