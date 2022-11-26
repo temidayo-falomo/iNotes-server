@@ -106,7 +106,6 @@ export const addNote = async (req: any, res: any) => {
 //ADD NEW FOLDER
 export const addFolder = async (req: any, res: any) => {
   let folder;
-  let folderExists;
   let currentUser = req.body.userId;
 
   //!TODO: Check if folder exists in the Frontend
@@ -358,6 +357,31 @@ export const lockNote = async (req: any, res: any) => {
 
   if (!note) {
     return res.status(404).json({ message: "Unable to Lock note" });
+  }
+
+  return res.status(200).json({ message: "Succesfully Locked Note!" });
+};
+
+export const unLock = async (req: any, res: any) => {
+  let note;
+  let currentUser = req.body.userId;
+  let index = req.body.index;
+
+  try {
+    note = await User.updateOne(
+      { _id: currentUser },
+      {
+        $set: {
+          [`notes.${index}.locked`]: false,
+        },
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+
+  if (!note) {
+    return res.status(404).json({ message: "Unable to unLock note" });
   }
 
   return res.status(200).json({ message: "Succesfully Locked Note!" });
