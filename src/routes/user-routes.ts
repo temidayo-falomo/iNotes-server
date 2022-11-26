@@ -11,6 +11,7 @@ import {
   pinNote,
   recoverNote,
   removeNote,
+  unLock,
   unPinNote,
   updateNote,
 } from "../controllers/user-controller";
@@ -31,5 +32,6 @@ userRouter.put("/completely-delete", completelyDeleteNote);
 userRouter.put("/pin-note", pinNote);
 userRouter.put("/unpin-note", unPinNote);
 userRouter.put("/lock-note", lockNote);
+userRouter.put("/unlock-note", unLock);
 
 export default userRouter;
